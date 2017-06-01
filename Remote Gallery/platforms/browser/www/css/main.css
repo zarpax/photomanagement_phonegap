@@ -1,0 +1,23 @@
+.contenedorBoton{
+float:left;
+width:10%;
+margin:0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+.contenedorBoton{
+width:12.5% !important;
+}
+}
+
+@media only screen and (max-width: 767px) {
+.contenedorBoton{
+width:25% !important;
+}
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+.contenedorBoton{
+width:16.666% !important;
+}
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title>Remote Gallery</title>
+  <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+  <script src="js/jquery-1.11.1_min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+<body>
+  <div data-role="page" id="pageSettings" >
+    <div data-role="header"><a href="#pageGallery" id="settingsGalleryButton" data-role="button" class="ui-btn-right">Gallery</a><span class="ui-title" /></div>
+    <div role="main" class="ui-content">
+      <div class="ui-field-contain">
+        <form id="formSettings">
+          <label for="settingsName">Nombre</label>
+          <input type="text" name="settingsName" id="settingsName" placeholder="Nombre">
+          <input type="password" name="settingsPassword" id="settingsPassword" placeholder="Password">
+          <label for="settingsPassword">Clave</label>
+        </form>
+        <button class="ui-btn" id="settingUpdateButton">Guardar</button>
+      </div>
+    </div>
+    <div role="footer"></div>
+  </div>
+
+  <div data-role="page" id="pageGallery" >
+    <div data-role="header"><a href="#pageSettings" id="gallerySettingsButton" data-role="button" class="ui-btn-right">Settings</a></div>
+    <div role="main" class="ui-content">
+      <div id="divPhotos"></div>
+      <div class="ui-field-contain">
+        <div id="cargando"></div>
+        <div id="wrapper"></div>
+        <div class="md-modal md-hide"></div>
+      </div>
+    </div>
+    <div role="footer"></div>
+  </div>
+
+  <div data-role="page" id="pageImgDetail">
+  	<div data-role="header"><a href="#" data-rel="back" data-icon="arrow-l">Back</a></div>
+  	<div role="main" class="ui-content">
+  		<div id="divImgDetail" style="width: 100%;"><img id="imgDetail" style="width: 100%;"/></div>
+  	</div>
+  </div>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="./js/fastclick.js"></script>
+  <!-- <script type="text/javascript" src="js/iscroll.js"></script> -->
+  <script type="text/javascript" src="js/restClient.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
