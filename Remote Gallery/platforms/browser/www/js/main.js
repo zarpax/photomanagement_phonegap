@@ -1,6 +1,10 @@
 var app = {
+  server: "192.168.2.7:8080",
   // var myScroll;
   appSettings : {},
+  firstGalleryLoaded : false,
+  thumbs: [],
+  thumbIndex: 0,
 
   main: function() {
     FastClick.attach(document.body);
@@ -22,23 +26,10 @@ var app = {
 
   initButtons: function() {
     var buttonSettingsUpdate = document.querySelector('#settingUpdateButton');
-    // var settingsGalleryButton = document.querySelector('#settingsGalleryButton');
-    // var gallerySettingsButton = document.querySelector('#gallerySettingsButton');
+    var buttonRefreshGallery = document.querySelector('#refreshGalleryButton');
 
     buttonSettingsUpdate.addEventListener('click' ,this.prepareSettingsForSave ,false);
-    // settingsGalleryButton.addEventListener('click' ,this.settingsGalleryButtonEvent ,false);
-    // gallerySettingsButton.addEventListener('click' ,this.gallerySettingsButtonEvent ,false);
-  },
-
-  settingsGalleryButtonEvent : function() {
-    $('#pageSettings').hide();
-    $('#pageGallery').show();
-    getRecentThumbs();
-  },
-
-  gallerySettingsButtonEvent : function() {
-    $('#pageGallery').hide();
-    $('#pageSettings').show();
+    buttonRefreshGallery.addEventListener('click' ,this.refreshGallery ,false);
   },
 
   readSettings: function() {
@@ -124,20 +115,62 @@ var app = {
   },
 
   showImage: function(response) {
-    $('#imgDetail').attr('src', "data:" + response.mime + ";base64," + response.bytes);
+    $('#imgDetail').attr('src', "data:image/jpeg;base64," + response);
     $('#imgDetail').attr('height', "100%");
     $('#imgDetail').attr('width', "100%");
     $.mobile.changePage("#pageImgDetail");
 
   },
 
+  showPhoto: function(photoId, width, heigth) {
+    $('#imgDetail').attr('src', "http://" + app.server + "/fileService/getPhoto/" + photoId + "/" + width + "/" + heigth);
+    $('#imgDetail').attr('height', heigth);
+    $('#imgDetail').attr('width', width);
+    $.mobile.changePage("#pageImgDetail");
+  },
+
   tapPhoto: function(event) {
-    getPhoto(event.target.id);
+    var pixelRatio = 1;
+
+    if (window.devicePixelRatio) {
+      pixelRatio = window.devicePixelRatio
+    }
+
+    var physicalScreenWidth = window.screen.width * pixelRatio;
+    var physicalScreenHeight = window.screen.height * pixelRatio;
+    //getPhoto(event.target.id, physicalScreenWidth, physicalScreenHeight);
+    app.showPhoto(event.target.id, physicalScreenWidth, physicalScreenHeight);
+  },
+
+  refreshGallery: function() {
+    $('#divPhotos').empty();
+    getThumbs();
+  },
+
+  loadThumb: function() {
+    alert("loadThumb");
+    if (app.thumbs[app.thumbIndex]) {
+      thumb = app.thumbs[app.thumbIndex];
+      downloadThumb(thumb.photoId, 100, 100);
+      app.thumbIndex = app.thumbIndex + 1;
+    } else {
+      $('#divPhotos').trigger('resize');
+    }
+  },
+
+  createThumbs: function() {
+    for(number in app.thumbs) {
+      thumb = app.thumbs[number];
+      var img = $('<img id="' + thumb.photoId + '" data-theme="a">'); //Equivalent: $(document.createElement('img'))
+      img.attr('src', "http://" + app.server + "/fileService/getThumb/" + thumb.photoId);
+      img.attr('height', "100px");
+      img.attr('width', "100px");
+      img.tap(app.tapPhoto);
+      img.appendTo('#divPhotos');
+    }
   }
 
 };
-
-
 
   if ('addEventListener' in document) {
     document.addEventListener('deviceready', function() {
@@ -146,41 +179,8 @@ var app = {
   };
 
   $(document).on("pageshow","#pageGallery",function(){ // When entering pagetwo
-    $('#divPhotos').empty();
-    getRecentThumbs();
+    if (!app.firstGalleryLoaded) {
+      app.firstGalleryLoaded = true;
+      app.refreshGallery();
+    }
   });
-
-  // function calcular(){
-  // //Obtenemos el ancho del dispositivo
-  // widthScreen = innerWidth;
-  // x$('#zoom').css({ width: widthScreen+'px' });
-  //
-  // /*Calculamos el ancho que deben tener cada foto en miniatura segun el ancho de la pantalla para poder asignarle el mismo alto*/
-  // if(widthScreen>='960') heightCapa = (widthScreen / 10)-10;
-  // if(widthScreen>='768' && widthScreen<='959') heightCapa = (widthScreen / 8)-10;
-  // if(widthScreen<='767') heightCapa = (widthScreen / 4)-10;
-  // if(widthScreen>='480' && widthScreen<='767') heightCapa = (widthScreen / 6)-10;
-  // x$('.contenedorBoton .contenedorBlanco .icono').css({ height: heightCapa+'px' });
-  //
-  // myScroll.refresh();
-  // x$('#cargando').css({ visibility: 'hidden'});
-  // if(estadoZoom==1) x$('.md-modal').css({ visibility: 'visible' });
-  // x$('#wrapper').css({ visibility: 'visible' });
-  //
-  // }
-
-
-
-  // x$(window).orientationchange(function(e) {
-  //   x$('#cargando').css({ visibility: 'visible'});
-  //   //Comprobamos si el zoom esta activado, y si lo esta lo ocultamos mientras aparece el gif cargando
-  //   if(estadoZoom==1) x$('.md-modal').css({ visibility: 'hidden' });
-  //   //Ocultamos la capa contenedora de las miniaturas
-  //   x$('#wrapper').css({ visibility: 'hidden' });
-  //   //Esperamos unos 300 ms para que al dispositivo le de tiempo girar la pantalla, y ejecutamos la funcion calcular
-  //   setTimeout(calcular,300);
-  // });
-
-  // $( ".settingUpdateButton" ).bind( "click", function(event, ui) {
-  //   app.saveSettings();
-  // });

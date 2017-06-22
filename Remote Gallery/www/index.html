@@ -10,38 +10,37 @@
 
 </head>
 <body>
-  <div data-role="page" id="pageSettings" >
-    <div data-role="header"><a href="#pageGallery" id="settingsGalleryButton" data-role="button" class="ui-btn-right">Gallery</a><span class="ui-title" /></div>
-    <div role="main" class="ui-content">
+  <div data-role="page" id="pageSettings" data-theme="a">
+    <div data-role="header" data-theme="a"><h3>Settings</h3><a href="#pageGallery" id="settingsGalleryButton" data-role="button"  class="ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-icon-left">Gallery</a><span class="ui-title" /></div>
+    <div data-role="content" class="ui-content">
       <div class="ui-field-contain">
         <form id="formSettings">
           <label for="settingsName">Nombre</label>
           <input type="text" name="settingsName" id="settingsName" placeholder="Nombre">
-          <input type="password" name="settingsPassword" id="settingsPassword" placeholder="Password">
           <label for="settingsPassword">Clave</label>
+          <input type="password" name="settingsPassword" id="settingsPassword" placeholder="Password">
         </form>
         <button class="ui-btn" id="settingUpdateButton">Guardar</button>
       </div>
     </div>
-    <div role="footer"></div>
+    <div data-role="footer"></div>
   </div>
 
-  <div data-role="page" id="pageGallery" >
-    <div data-role="header"><a href="#pageSettings" id="gallerySettingsButton" data-role="button" class="ui-btn-right">Settings</a></div>
-    <div role="main" class="ui-content">
-      <div id="divPhotos"></div>
-      <div class="ui-field-contain">
-        <div id="cargando"></div>
-        <div id="wrapper"></div>
-        <div class="md-modal md-hide"></div>
-      </div>
+  <div data-role="page" id="pageGallery" data-theme="a">
+    <div data-role="header" data-theme="a">
+        <h3>Gallery</h3>
+        <a href="#pageSettings" id="gallerySettingsButton" data-role="button" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext ui-btn-icon-left">Settings</a>
+        <a href="#" id="refreshGalleryButton" data-role="button" class="ui-btn ui-corner-all ui-icon-refresh ui-btn-icon-notext ui-btn-icon-left">Refresh</a>
     </div>
-    <div role="footer"></div>
+    <div data-role="content" class="ui-content">
+      <div id="divPhotos"></div>
+    </div>
+    <div data-role="footer"></div>
   </div>
 
-  <div data-role="page" id="pageImgDetail">
-  	<div data-role="header"><a href="#" data-rel="back" data-icon="arrow-l">Back</a></div>
-  	<div role="main" class="ui-content">
+  <div data-role="page" id="pageImgDetail"data-theme="a">
+  	<div data-role="header" data-theme="a"><h3>Detail</h3><a href="#" data-rel="back" data-icon="arrow-l">Back</a></div>
+  	<div data-role="content" class="ui-content">
   		<div id="divImgDetail" style="width: 100%;"><img id="imgDetail" style="width: 100%;"/></div>
   	</div>
   </div>
