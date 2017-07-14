@@ -5,8 +5,8 @@ var app = {
   firstGalleryLoaded : false,
   thumbs: [],
   thumbIndex: 0,
-  thumbWidth: -1,
-  thumbHeight: -1,
+  thumbWidth: 100,
+  thumbHeight: 100,
 
   main: function() {
     FastClick.attach(document.body);
@@ -16,7 +16,10 @@ var app = {
 
   verifySettings : function() {
     // alert("verifySettings app.appSettings[" + JSON.stringify(app.appSettings) + "]");
-    calculateThumbSize();
+    app.calculateThumbSize();
+
+    alert("Thumbs calculated width[" + app.thumbWidth + "] height[" + app.thumbHeight + "]");
+
     if (app.appSettings.userSettings == null) {
         $.mobile.changePage("#pageSettings");
     } else {
@@ -28,22 +31,19 @@ var app = {
     var pixelRatio = 1;
 
     if (window.devicePixelRatio) {
-      pixelRatio = window.devicePixelRatio
+      pixelRatio = window.devicePixelRatio;
     }
 
     var physicalScreenWidth = window.screen.width * pixelRatio;
 
     if (physicalScreenWidth > 1000) {
-      thumbWidth = 150;
-      thumbHeight = 150;
+      app.thumbWidth = 150;
+      app.thumbHeight = 150;
     } else if (physicalScreenWidth > 720) {
-      thumbWidth = 100;
-      thumbHeight = 100;
-    } else {
-      thumbWidth = 50;
-      thumbHeight = 50;
+      app.thumbWidth = 100;
+      app.thumbHeight = 100;
     }
-  }
+  },
 
   initButtons: function() {
     var buttonSettingsUpdate = document.querySelector('#settingUpdateButton');
@@ -145,8 +145,8 @@ var app = {
 
   showPhoto: function(photoId, width, heigth) {
     $('#imgDetail').attr('src', "http://" + app.server + "/fileService/getPhoto/" + photoId + "/" + width + "/" + heigth);
-    $('#imgDetail').attr('height', heigth);
-    $('#imgDetail').attr('width', width);
+    // $('#imgDetail').attr('height', heigth);
+    // $('#imgDetail').attr('width', width);
     $.mobile.changePage("#pageImgDetail");
   },
 
@@ -183,9 +183,9 @@ var app = {
     for(number in app.thumbs) {
       thumb = app.thumbs[number];
       var img = $('<img id="' + thumb.photoId + '" data-theme="a">'); //Equivalent: $(document.createElement('img'))
-      img.attr('src', "http://" + app.server + "/fileService/getThumb/" + thumb.photoId + "/" + thumbWidth + "/" + thumbHeight);
-      img.attr('height', thumbWidth + "px");
-      img.attr('width', thumbHeight + "px");
+      img.attr('src', "http://" + app.server + "/fileService/getThumb/" + thumb.photoId + "/" + app.thumbWidth + "/" + app.thumbHeight);
+      img.attr('height', app.thumbWidth + "px");
+      img.attr('width', app.thumbHeight + "px");
       img.tap(app.tapPhoto);
       img.appendTo('#divPhotos');
     }

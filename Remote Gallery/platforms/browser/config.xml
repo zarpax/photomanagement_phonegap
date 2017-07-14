@@ -9,4 +9,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="phonegap-version" value="cli-6.1.0" />
+    <preference name="windows-phone-target-version" value="10.0" />
+    <preference name="Windows.Mobile" value="10.0.10240.0" />
+    <preference name="Windows.Mobile-MaxVersionTested" value="10.0.14393.1066" />
 </widget>
