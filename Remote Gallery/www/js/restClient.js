@@ -65,33 +65,33 @@ function getPhotoById(photoId) {
 	}, false);
 }
 
-function getThumb(photoId, width, heigth) {
-	alert("getThumb PhotoId[" + photoId + "] width[" + width + "] heigth[" + heigth + "]");
-	$.ajax({
-	    type       : "POST",
-	    url        : "http://" + app.server + "/fileService/getThumb",
-	    crossDomain: true,
-	    beforeSend : function() {$.mobile.loading('show')},
-	    complete   : function() {$.mobile.loading('hide')},
-			dataType	 : "json",
-	    data       : '{"photoId":' + photoId + ', "width":' + width + ', "heigth":' + heigth + '}',
-			contentType: "application/json; charset=utf-8",
-	    success    : function(response) {
-					var img = $('<img id="' + response.id + '" data-theme="a">');
-					img.attr('src', "data:" + response.mime + ";base64," + response.bytes);
-					img.attr('height', "150px");
-					img.attr('width', "150px");
-					img.tap(app.tapPhoto);
-					img.appendTo('#divPhotos');
-
-					app.loadThumb();
-	    },
-	    error      : function(xhr, status, error) {
-	        //console.error("error");
-	        alert("ERROR - xhr.status: " + xhr.status + '\nxhr.responseText: ' + xhr.responseText + '\nxhr.statusText: ' + xhr.statusText + '\nError: ' + error + '\nStatus: ' + status);
-	    }
-	}, false);
-}
+// function getThumb(photoId, width, heigth) {
+// 	alert("getThumb PhotoId[" + photoId + "] width[" + width + "] heigth[" + heigth + "]");
+// 	$.ajax({
+// 	    type       : "POST",
+// 	    url        : "http://" + app.server + "/fileService/getThumb",
+// 	    crossDomain: true,
+// 	    beforeSend : function() {$.mobile.loading('show')},
+// 	    complete   : function() {$.mobile.loading('hide')},
+// 			dataType	 : "json",
+// 	    data       : '{"photoId":' + photoId + ', "width":' + width + ', "heigth":' + heigth + '}',
+// 			contentType: "application/json; charset=utf-8",
+// 	    success    : function(response) {
+// 					var img = $('<img id="' + response.id + '" data-theme="a">');
+// 					img.attr('src', "data:" + response.mime + ";base64," + response.bytes);
+// 					img.attr('height', "150px");
+// 					img.attr('width', "150px");
+// 					img.tap(app.tapPhoto);
+// 					img.appendTo('#divPhotos');
+//
+// 					app.loadThumb();
+// 	    },
+// 	    error      : function(xhr, status, error) {
+// 	        //console.error("error");
+// 	        alert("ERROR - xhr.status: " + xhr.status + '\nxhr.responseText: ' + xhr.responseText + '\nxhr.statusText: ' + xhr.statusText + '\nError: ' + error + '\nStatus: ' + status);
+// 	    }
+// 	}, false);
+// }
 
 function downloadThumb(photoId, width, heigth) {
 
